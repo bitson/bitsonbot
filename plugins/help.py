@@ -18,7 +18,7 @@ def help(message):
         username = str(message.from_user.username)
         chat_id = str(message.chat.id)
         args = get_content(message)
-        print(chat_id)
+        
         if not args:
             if message.chat.type == 'private':
                 bot.send_message(chat_id,

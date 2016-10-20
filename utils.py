@@ -3,6 +3,7 @@
 
 # Standard lib imports
 from datetime import datetime
+import random
 import re
 import time
 
@@ -41,6 +42,7 @@ def in_time(message):
 text_messages = {
     'help': 'Estas son todas las cosas que puedo hacer...\n'
             '`>` /help\n'
+            '`>` /flip\n'
             'Un monton, no?\n'
             'Ingresá /<comando> "-?" para mas información',
     'help_group':
