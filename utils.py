@@ -81,6 +81,7 @@ text_messages = {
             '`>` /flip <cara/seca>\n'
             '`>` /set_alarm HH:mm message [repeat,]\n'
             '`>` /rem_alarm HH:mm\n'
+            '`>` /show_alarms \n'
             'Un monton, no?\n'
             'Ingresá /<comando> "-?" para mas información',
     'help_group':
