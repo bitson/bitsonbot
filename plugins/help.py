@@ -22,8 +22,7 @@ def help(message):
         if not args:
             if message.chat.type == 'private':
                 bot.send_message(chat_id,
-                                 text_messages['help'],
-                                 parse_mode="Markdown")
+                                 text_messages['help'])
             elif message.chat.type == 'group' \
                     or message.chat.type == 'supergroup':
                 

@@ -77,11 +77,11 @@ alarms = {
 
 text_messages = {
     'help': 'Estas son todas las cosas que puedo hacer...\n'
-            '`>` /help\n'
-            '`>` /flip <cara/seca>\n'
-            '`>` /set_alarm HH:mm message [repeat,]\n'
-            '`>` /rem_alarm HH:mm\n'
-            '`>` /show_alarms \n'
+            '> /help\n'
+            '> /flip <cara/seca>\n'
+            '> /set_alarm HH:MM, message, <repeat/norepeat>\n'
+            '> /rem_alarm HH:MM\n'
+            '> /show_alarms \n'
             'Un monton, no?\n'
             'Ingresá /<comando> "-?" para mas información',
     'help_group':
