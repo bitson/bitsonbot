@@ -10,7 +10,7 @@ import time
 # Third Party imports
 import telebot
 # BITSON Imports
-
+from logger import logger
 
 bot = telebot.TeleBot('181427227:AAEE664QqZ0oGafEm3Kmp8P0ttObrDHQdv4')
 
@@ -39,16 +39,55 @@ def in_time(message):
     else:
         return False
 
+
+def verify_alarms(alarms=None):
+    while True:
+        now = datetime.now().strftime('%H:%M')
+        alarm = alarms.get(now) or None
+        if alarm:
+            try:
+                bot.send_message(chat_id=alarm.get('chat_id'),
+                                 text=alarm.get('message'))
+            except Exception:
+                logger.error(Exception)
+            finally:
+                if alarm.get('repeat') == 'norepeat':
+                    del(alarms[now])
+                else:
+                    while now == datetime.now().strftime('%H:%M'):
+                        pass
+
+
+def show_alarms(chat_id=None):
+    alarm_keys = list(alarms.keys())
+    alarm_keys.sort()
+    response = str()
+    for key in alarm_keys:
+        if alarms[key]['chat_id'] == chat_id:
+            response += "`%s - %s `\n" % (key, alarms[key]['message'])
+    if not response:
+        response = '`No hay alarmas para mostrar`'
+    return response
+
+alarms = {
+    # 'HH:mm':{'message': 'message',
+    #          'repeat': False,
+    #          'channel_id': channel_id }
+}
+
 text_messages = {
     'help': 'Estas son todas las cosas que puedo hacer...\n'
             '`>` /help\n'
-            '`>` /flip\n'
+            '`>` /flip <cara/seca>\n'
+            '`>` /set_alarm HH:mm message [repeat,]\n'
+            '`>` /rem_alarm HH:mm\n'
             'Un monton, no?\n'
             'Ingresá /<comando> "-?" para mas información',
     'help_group':
         u"`Mejor no spammear en {title}... Te envío un MP con la ayuda`",
     'welcome': "Bienvenido al bot de Bitson.\n"
                "Puede solicitar ayuda ingresando /help... o llamando al 911 "
-               "(dependiendo de que tipo de ayuda necesite)"
-    
+               "(dependiendo de que tipo de ayuda necesite)",
+    'set_alarm': "Alarma configurada.",
+    'rem_alarm': "Alarma desactivada.",
 }

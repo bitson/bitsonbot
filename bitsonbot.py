@@ -2,7 +2,7 @@
 # -*- coding:utf-8 -*-
 
 # Standard lib imports
-import sys
+import threading
 # Third Party imports
 
 # BITSON Imports
@@ -20,8 +20,13 @@ def run(mode='normal'):
         bot.polling(True)
 
     else:
+        logger.debug('Alarm process started')
+        t = threading.Thread(target=verify_alarms, args=[alarms,])
+        t.daemon = True
+        t.start()
         logger.debug('Bot started...')
         bot.polling(none_stop=False, interval=0)
+        
 
 
 if __name__ == '__main__':
