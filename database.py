@@ -21,6 +21,4 @@ Base = declarative_base()
 
 Session = sessionmaker(bind=engine)
 db = Session()
-
-
-
+Base.metadata.create_all(engine)
