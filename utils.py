@@ -9,6 +9,7 @@ import time
 
 # Third Party imports
 import telebot
+
 # BITSON Imports
 from logger import logger
 
@@ -86,6 +87,9 @@ text_messages = {
             'Ingresá /<comando> "-?" para mas información',
     'help_group':
         u"`Mejor no spammear en {title}... Te envío un MP con la ayuda`",
+    'help_group_first':
+        u"Primero enviame /start por privado a @bitsonbot asi puedo "
+        u"empezar a hablarte",
     'welcome': "Bienvenido al bot de Bitson.\n"
                "Puede solicitar ayuda ingresando /help... o llamando al 911 "
                "(dependiendo de que tipo de ayuda necesite)",

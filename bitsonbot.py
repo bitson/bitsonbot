@@ -9,7 +9,7 @@ import threading
 import importdir
 from utils import *
 from logger import logger
-
+from database import db
 
 importdir.do('plugins', globals())
 
