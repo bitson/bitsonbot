@@ -3,10 +3,11 @@
 # Third-Party imports
 
 # BITSON Imports
-from utils import *
 from logger import logger
-from models.users import User
+from utils import *
+
 from bitsonbot import db
+from bitsonbot.models.users import User
 
 logger.debug("Loading " + __name__ + "...")
 

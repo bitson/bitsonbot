@@ -2,10 +2,8 @@
 # Standard-Lib imports
 from sqlalchemy import Column, String, Integer
 from sqlalchemy import Sequence
-# Third-Party imports
 
-# BITSON Imports
-from database import Base
+from bitsonbot.database import Base
 
 
 class User(Base):

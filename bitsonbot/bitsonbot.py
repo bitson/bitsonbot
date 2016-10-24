@@ -3,13 +3,11 @@
 
 # Standard lib imports
 import threading
-# Third Party imports
 
-# BITSON Imports
-import importdir
-from utils import *
-from logger import logger
-from database import db
+from .logger import logger
+from .utils import *
+
+from bitsonbot import importdir
 
 importdir.do('plugins', globals())
 

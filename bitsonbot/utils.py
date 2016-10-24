@@ -2,16 +2,13 @@
 # -*- coding:utf-8 -*-
 
 # Standard lib imports
-from datetime import datetime
-import random
-import re
 import time
+from datetime import datetime
 
-# Third Party imports
+import re
 import telebot
 
-# BITSON Imports
-from logger import logger
+from bitsonbot.logger import logger
 
 bot = telebot.TeleBot('181427227:AAEE664QqZ0oGafEm3Kmp8P0ttObrDHQdv4')
 

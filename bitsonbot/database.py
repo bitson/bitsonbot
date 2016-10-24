@@ -6,10 +6,8 @@
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
-from sqlalchemy import Column, String, Integer
-from sqlalchemy import Sequence
-# BITSON Imports
-from logger import logger
+
+from bitsonbot.logger import logger
 
 DB_STRING = 'postgresql://bitsonbot:bitson@localhost:5432/bitsonbot'
 

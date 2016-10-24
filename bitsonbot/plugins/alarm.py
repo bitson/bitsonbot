@@ -4,8 +4,7 @@
 # Third-Party imports
 
 # BITSON Imports
-from utils import *
-from logger import logger
+from bitsonbot.utils import *
 
 
 @bot.message_handler(commands=['set_alarm'])

@@ -4,7 +4,8 @@
 
 # BITSON Imports
 from utils import *
-from logger import logger
+
+from bitsonbot.logger import logger
 
 logger.debug("Loading " + __name__ + "...")
 
