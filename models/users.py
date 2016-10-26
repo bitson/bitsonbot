@@ -4,8 +4,7 @@
 # Standard lib Imports
 
 # Third Party Imports
-from sqlalchemy import Column, String, Integer
-from sqlalchemy import Sequence
+from sqlalchemy import Column, String, Integer, Boolean
 # BITSON Imports
 from utils import Base
 
@@ -16,3 +15,5 @@ class User(Base):
     username = Column(String(200))
     telegram_id = Column(Integer)
     private_chat = Column(Integer)
+    admin = Column(Boolean, default=False)
+    banned = Column(Boolean, default=False)
