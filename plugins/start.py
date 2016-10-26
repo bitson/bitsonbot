@@ -8,9 +8,9 @@ from utils import *
 from utils import session
 from models.users import User
 
-#from bitsonbot.logger import logger
+from logger import logger
 
-#logger.debug("Loading " + __name__ + "...")
+logger.debug("Loading " + __name__ + " plugin...")
 
 
 @bot.message_handler(commands=['start'])

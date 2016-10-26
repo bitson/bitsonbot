@@ -6,16 +6,15 @@
 # Third-Party Imports
 import importdir
 # BITSON Imports
-import config
 from utils import *
-
+from logger import logger
 importdir.do('plugins', globals())
 
 
 def run(mode='normal'):
     
     if mode == 'debug':
-        #logger.debug('Bot on debug mode...')
+        logger.debug('Bot on debug mode...')
         bot.polling(True)
     
     else:
@@ -23,7 +22,7 @@ def run(mode='normal'):
         #t = threading.Thread(target=verify_alarms, args=[alarms, ])
         #t.daemon = True
         #t.start()
-        #logger.debug('Bot started...')
+        logger.debug('Bot started...')
         bot.polling(none_stop=False, interval=0)
 
 

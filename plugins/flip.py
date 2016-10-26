@@ -6,7 +6,7 @@
 from utils import *
 from logger import logger
 
-logger.debug("Loading " + __name__ + "...")
+logger.debug("Loading " + __name__ + " plugin...")
 
 
 @bot.message_handler(commands=['flip'])

@@ -7,6 +7,8 @@
 from utils import *
 from logger import logger
 
+logger.debug("Loading " + __name__ + " plugin...")
+
 
 @bot.message_handler(commands=['set_alarm'])
 def set_alarm(message):

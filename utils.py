@@ -5,7 +5,7 @@
 import time
 import sys
 from datetime import datetime
-
+import random
 import re
 # Third-Party Imports
 import telebot
@@ -13,7 +13,7 @@ from sqlalchemy.engine import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
-# from bitsonbot.logger import logger
+from logger import logger
 
 try:
     TOKEN = str(sys.argv[1])
@@ -25,7 +25,7 @@ except:
 DB_STRING = 'postgresql://bitsonbot:bitson@localhost:5432/bitsonbot'
 
 # DB CONFIGURATION
-
+logger.debug("Starting DB Connection")
 engine = create_engine(DB_STRING)
 Base = declarative_base(bind=engine)
 Session = sessionmaker(bind=engine)
