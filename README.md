@@ -1,2 +1,0 @@
-# bitsonbot
-Our Telegram Bot 

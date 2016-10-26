@@ -1,16 +1,35 @@
 #! /usr/bin/env python
 # -*- coding:utf-8 -*-
 
-# Standard lib imports
+# Standard lib Imports
 import time
+import sys
 from datetime import datetime
 
 import re
+# Third-Party Imports
 import telebot
+from sqlalchemy.engine import create_engine
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker
 
-from bitsonbot.logger import logger
+# from bitsonbot.logger import logger
 
-bot = telebot.TeleBot('181427227:AAEE664QqZ0oGafEm3Kmp8P0ttObrDHQdv4')
+try:
+    TOKEN = str(sys.argv[1])
+    bot = telebot.TeleBot(TOKEN)
+except:
+    print('Debe ingresar el token.')
+
+
+DB_STRING = 'postgresql://bitsonbot:bitson@localhost:5432/bitsonbot'
+
+# DB CONFIGURATION
+
+engine = create_engine(DB_STRING)
+Base = declarative_base(bind=engine)
+Session = sessionmaker(bind=engine)
+session = Session()
 
 
 def get_content(text):
@@ -87,9 +106,11 @@ text_messages = {
     'help_group_first':
         u"Primero enviame /start por privado a @bitsonbot asi puedo "
         u"empezar a hablarte",
-    'welcome': "Bienvenido al bot de Bitson.\n"
+    'first_welcome': "Bienvenido al bot de Bitson.\n"
                "Puede solicitar ayuda ingresando /help... o llamando al 911 "
                "(dependiendo de que tipo de ayuda necesite)",
+    'welcome_again': "Bueno... con un /start estamos bien.\n"
+               "Puede solicitar ayuda ingresando /help... ",
     'set_alarm': "Alarma configurada.",
     'rem_alarm': "Alarma desactivada.",
 }
