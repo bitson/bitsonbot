@@ -57,40 +57,25 @@ def in_time(message):
         return False
 
 
-def verify_alarms(alarms=None):
+def verify_alarms():
+    from models.alarms import Alarm
     while True:
         now = datetime.now().strftime('%H:%M')
-        alarm = alarms.get(now) or None
-        if alarm:
-            try:
-                bot.send_message(chat_id=alarm.get('chat_id'),
-                                 text=alarm.get('message'))
-            except Exception:
-                logger.error(Exception)
-            finally:
-                if alarm.get('repeat') == 'norepeat':
-                    del(alarms[now])
-                else:
-                    while now == datetime.now().strftime('%H:%M'):
-                        pass
+        alarms = session.query(Alarm).filter(Alarm.enable==True,
+                                            Alarm.hour==now).all()
+        try:
+            for alarm in alarms:
+                bot.send_message(chat_id=alarm.chat_id,
+                                 text=alarm.message)
+                if not alarm.repeat:
+                    alarm.enable = False
+        except Exception as ex:
+            logger.error(ex)
+        finally:
+            session.commit()
+            while now == datetime.now().strftime('%H:%M'):
+                pass
 
-
-def show_alarms(chat_id=None):
-    alarm_keys = list(alarms.keys())
-    alarm_keys.sort()
-    response = str()
-    for key in alarm_keys:
-        if alarms[key]['chat_id'] == chat_id:
-            response += "`%s - %s `\n" % (key, alarms[key]['message'])
-    if not response:
-        response = '`No hay alarmas para mostrar`'
-    return response
-
-alarms = {
-    # 'HH:mm':{'message': 'message',
-    #          'repeat': False,
-    #          'channel_id': channel_id }
-}
 
 text_messages = {
     'help': 'Estas son todas las cosas que puedo hacer...\n'
@@ -113,4 +98,5 @@ text_messages = {
                "Puede solicitar ayuda ingresando /help... ",
     'set_alarm': "Alarma configurada.",
     'rem_alarm': "Alarma desactivada.",
+    
 }

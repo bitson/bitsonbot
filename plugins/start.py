@@ -4,8 +4,6 @@
 
 # BITSON Imports
 from utils import *
-
-from utils import session
 from models.users import User
 
 from logger import logger
