@@ -27,7 +27,7 @@ pip install -r requirements.txt
 docker run --name bitsonbot -e POSTGRES_PASSWORD=bitson -e POSTGRES_USER=bitsonbot -e POSTGRES_DB=bitsonbot -p 5432:5432 -d postgres
 ```
 
-### ([Hacemos el upgrade de la base](https://github.com/bitson/bitsonbot/wiki/Base-de-datos-y-migraciones/ ""))
+### [Hacemos el upgrade de la base](https://github.com/bitson/bitsonbot/wiki/Base-de-datos-y-migraciones/ "")
 
 ```
 PYTHONPATH=. alembic upgrade head
