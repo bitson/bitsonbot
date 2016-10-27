@@ -1,18 +1,35 @@
 #! /usr/bin/env python
 # -*- coding:utf-8 -*-
 
-# Standard lib imports
+# Standard lib Imports
+import time
+import sys
 from datetime import datetime
 import random
 import re
-import time
-
-# Third Party imports
+# Third-Party Imports
 import telebot
-# BITSON Imports
+from sqlalchemy.engine import create_engine
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker
+
 from logger import logger
 
-bot = telebot.TeleBot('181427227:AAEE664QqZ0oGafEm3Kmp8P0ttObrDHQdv4')
+try:
+    TOKEN = str(sys.argv[1])
+    bot = telebot.TeleBot(TOKEN)
+except:
+    print('Debe ingresar el token.')
+
+
+DB_STRING = 'postgresql://bitsonbot:bitson@localhost:5432/bitsonbot'
+
+# DB CONFIGURATION
+logger.debug("Starting DB Connection")
+engine = create_engine(DB_STRING)
+Base = declarative_base(bind=engine)
+Session = sessionmaker(bind=engine)
+session = Session()
 
 
 def get_content(text):
@@ -40,40 +57,25 @@ def in_time(message):
         return False
 
 
-def verify_alarms(alarms=None):
+def verify_alarms():
+    from models.alarms import Alarm
     while True:
         now = datetime.now().strftime('%H:%M')
-        alarm = alarms.get(now) or None
-        if alarm:
-            try:
-                bot.send_message(chat_id=alarm.get('chat_id'),
-                                 text=alarm.get('message'))
-            except Exception:
-                logger.error(Exception)
-            finally:
-                if alarm.get('repeat') == 'norepeat':
-                    del(alarms[now])
-                else:
-                    while now == datetime.now().strftime('%H:%M'):
-                        pass
+        alarms = session.query(Alarm).filter(Alarm.enable==True,
+                                            Alarm.hour==now).all()
+        try:
+            for alarm in alarms:
+                bot.send_message(chat_id=alarm.chat_id,
+                                 text=alarm.message)
+                if not alarm.repeat:
+                    alarm.enable = False
+        except Exception as ex:
+            logger.error(ex)
+        finally:
+            session.commit()
+            while now == datetime.now().strftime('%H:%M'):
+                pass
 
-
-def show_alarms(chat_id=None):
-    alarm_keys = list(alarms.keys())
-    alarm_keys.sort()
-    response = str()
-    for key in alarm_keys:
-        if alarms[key]['chat_id'] == chat_id:
-            response += "`%s - %s `\n" % (key, alarms[key]['message'])
-    if not response:
-        response = '`No hay alarmas para mostrar`'
-    return response
-
-alarms = {
-    # 'HH:mm':{'message': 'message',
-    #          'repeat': False,
-    #          'channel_id': channel_id }
-}
 
 text_messages = {
     'help': 'Estas son todas las cosas que puedo hacer...\n'
@@ -86,9 +88,15 @@ text_messages = {
             'Ingresá /<comando> "-?" para mas información',
     'help_group':
         u"`Mejor no spammear en {title}... Te envío un MP con la ayuda`",
-    'welcome': "Bienvenido al bot de Bitson.\n"
+    'help_group_first':
+        u"Primero enviame /start por privado a @bitsonbot asi puedo "
+        u"empezar a hablarte",
+    'first_welcome': "Bienvenido al bot de Bitson.\n"
                "Puede solicitar ayuda ingresando /help... o llamando al 911 "
                "(dependiendo de que tipo de ayuda necesite)",
+    'welcome_again': "Bueno... con un /start estamos bien.\n"
+               "Puede solicitar ayuda ingresando /help... ",
     'set_alarm': "Alarma configurada.",
     'rem_alarm': "Alarma desactivada.",
+    
 }
