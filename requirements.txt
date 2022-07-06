@@ -8,7 +8,7 @@ cffi==0.8.6
 chardet==2.3.0
 colorama==0.3.2
 ecdsa==0.11
-html5lib==0.999
+html5lib==0.999999999
 logutils==0.3.3
 lxml==3.4.0
 ndg-httpsclient==0.3.2
